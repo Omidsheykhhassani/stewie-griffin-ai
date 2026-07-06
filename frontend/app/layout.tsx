@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
+
 import "./globals.css";
+
+import ReduxProvider from "@/redux/providers/ReduxProvider";
+
+import AuthModal from "@/components/AuthModal/AuthModal";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,10 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <body className="min-h-full flex flex-col">
+        <ReduxProvider>
+          {children}
+          <AuthModal />
+        </ReduxProvider>
+      </body>
     </html>
   );
 }
