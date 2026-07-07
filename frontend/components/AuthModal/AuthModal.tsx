@@ -20,7 +20,7 @@ export default function AuthModal() {
         />
 
         <motion.div
-          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-bgcolor p-6 rounded-xl z-50"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-1rem)] max-w-lg bg-bgcolor p-6 rounded-xl z-50"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}

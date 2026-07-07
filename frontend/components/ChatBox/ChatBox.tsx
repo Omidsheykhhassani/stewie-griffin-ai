@@ -11,7 +11,7 @@ export default function ChatBox() {
         placeholder="Ask anything"
       />
       <button type="submit" className="p-4 border border-txtcolor rounded-full flex justify-center items-center bg-primary text-bgcolor cursor-pointer">
-        <ChevronRight />
+        <ChevronRight strokeWidth={1} />
       </button>
     </div>
   );

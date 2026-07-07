@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @theme {
+  --color-blackshade: #030A02!important;
+  --color-whiteshade: #FFFFFF!important;
+
   --color-primary: #F89B22;
   --color-success: #2A6431;
   --color-error: #853417;
@@ -22,6 +25,10 @@
 
 @utility bg-bgcolor {
   background-color: var(--bgcolor);
+}
+
+@utility border-txtcolor {
+  color: var(--txtcolor)
 }
 
 body {
