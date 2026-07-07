@@ -1,15 +1,9 @@
-"use client";
-
-import { useEffect } from "react";
-import { useAppDispatch } from "@/redux/hooks";
-import { openAuth } from "@/redux/features/authSlice";
+import AuthContent from "@/components/AuthContent/AuthContent";
 
 export default function AuthPage() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(openAuth("login"));
-  }, [dispatch]);
-
-  return null;
+  return (
+    <main className="min-h-screen flex items-center justify-center">
+      <AuthContent />
+    </main>
+  );
 }

@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import { useRouter } from "next/navigation";
 
 import { useAppDispatch } from "@/redux/hooks";
-import { openAuth } from "@/redux/features/authSlice";
+import { setView } from "@/redux/features/authSlice";
 
 export default function Navbar() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function Navbar() {
       <div className="flex gap-4">
         <Button
           onClick={() => {
-            dispatch(openAuth("signup"));
+            dispatch(setView("signup"));
             router.push("/auth");
           }}
         >
@@ -26,7 +26,7 @@ export default function Navbar() {
         </Button>
         <Button
           onClick={() => {
-            dispatch(openAuth("login"));
+            dispatch(setView("login"));
             router.push("/auth");
           }}
         >
