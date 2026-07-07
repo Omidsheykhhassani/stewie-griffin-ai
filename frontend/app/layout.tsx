@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import ReduxProvider from "@/redux/providers/ReduxProvider";
+import ThemeWrapper from "@/components/ThemeWrapper/ThemeWrapper";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,16 +15,16 @@ export default function RootLayout({
   modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-full flex flex-col">
-        <ReduxProvider>
+      <ReduxProvider>
+        <ThemeWrapper>
           {children}
           {modal}
-        </ReduxProvider>
-      </body>
+        </ThemeWrapper>
+      </ReduxProvider>
     </html>
   );
 }
