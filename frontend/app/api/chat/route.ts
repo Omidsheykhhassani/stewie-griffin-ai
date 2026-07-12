@@ -1,56 +1,34 @@
-import { NextResponse } from "next/server";
+import { streamText, convertToModelMessages, type UIMessage } from "ai";
+import { openrouter } from "@openrouter/ai-sdk-provider";
 
-import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/getSession";
+import { saveChat } from "@/lib/chat";
+
+export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  try {
-    const { message } = await req.json();
+  const {
+    messages,
+  }: {
+    chatId: string;
+    messages: UIMessage[];
+  } = await req.json();
 
-    const session = await getSession();
+  const session = await getSession();
 
-    // Save user message only if logged in
-    if (session) {
-      await prisma.message.create({
-        data: {
-          content: message,
-          role: "USER",
-          userId: session.user.id,
-        },
-      });
-    }
+  const result = streamText({
+    model: openrouter("poolside/laguna-m.1:free"),
 
-    /*
-      AI response will go here.
-      For now we fake it.
-    */
+    messages: await convertToModelMessages(messages),
+  });
 
-    const aiResponse = "This is an AI response";
+  return result.toUIMessageStreamResponse({
+    originalMessages: messages,
 
-    // Save AI response only if logged in
-    if (session) {
-      await prisma.message.create({
-        data: {
-          content: aiResponse,
-          role: "AI",
-          userId: session.user.id,
-        },
-      });
-    }
+    async onFinish({ messages }) {
+      if (!session) return;
 
-    return NextResponse.json({
-      message: aiResponse,
-    });
-  } catch (error) {
-    console.error(error);
-
-    return NextResponse.json(
-      {
-        error: "Something went wrong",
-      },
-      {
-        status: 500,
-      },
-    );
-  }
+      await saveChat(session.user.id, messages);
+    },
+  });
 }
