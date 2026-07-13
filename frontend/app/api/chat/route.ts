@@ -4,6 +4,8 @@ import { openrouter } from "@openrouter/ai-sdk-provider";
 import { getSession } from "@/lib/getSession";
 import { saveChat } from "@/lib/chat";
 
+import { STEWIE_PROMPT } from "@/lib/stewie";
+
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
@@ -18,7 +20,7 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: openrouter("poolside/laguna-m.1:free"),
-
+    system: STEWIE_PROMPT,
     messages: await convertToModelMessages(messages),
   });
 

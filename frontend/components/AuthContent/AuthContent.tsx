@@ -2,8 +2,8 @@
 
 import { useAppSelector } from "@/redux/hooks";
 
-import LoginForm from "../AuthModal/LoginForm/LoginForm";
-import SignupForm from "../AuthModal/SignupForm/SignupForm";
+import LoginForm from "../../sections/LoginForm/LoginForm";
+import SignupForm from "../../sections/SignupForm/SignupForm";
 
 export default function AuthContent() {
   const view = useAppSelector((state) => state.auth.view);

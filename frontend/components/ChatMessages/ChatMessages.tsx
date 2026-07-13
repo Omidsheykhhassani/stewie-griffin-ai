@@ -1,8 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 import type { UIMessage } from "ai";
 
-import { useEffect, useRef } from "react";
+import Image from "next/image";
+
+import stewieImage from "@/assets/images/stewie-image.png";
 
 type ChatMessagesProps = {
   messages: UIMessage[];
@@ -22,9 +26,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
       {messages.map((message) => (
         <div
           key={message.id}
-          className={
-            message.role === "user" ? "flex justify-end" : "flex justify-start"
-          }
+          className={`${message.role === "user" ? "justify-start" : "justify-end"} flex items-start`}
         >
           <div className="max-w-3xl rounded-xl border border-txtcolor px-5 py-3">
             {message.parts.map((part, index) => {
@@ -39,6 +41,15 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
               return null;
             })}
           </div>
+          {message.role === "assistant" ? (
+            <Image
+              src={stewieImage}
+              alt="stewieImage"
+              className="hidden lg:inline-block w-full h-auto max-w-50"
+            />
+          ) : (
+            ""
+          )}
         </div>
       ))}
       <div ref={bottomRef} />

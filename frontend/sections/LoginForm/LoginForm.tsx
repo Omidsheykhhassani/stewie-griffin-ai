@@ -2,42 +2,42 @@ import { useState } from "react";
 
 import { authClient } from "@/lib/auth-client";
 
-import { useRouter } from "next/navigation";
-
-import { useAppDispatch } from "@/redux/hooks";
-import { setView } from "@/redux/features/authSlice";
-
-import TextInput from "@/components/TextInput/TextInput";
 import Button from "@/components/Button/Button";
+import TextInput from "@/components/TextInput/TextInput";
+
+import { setView } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
 import { X } from "lucide-react";
 
-export default function SignupForm() {
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+import stewieGreetingImage from "@/assets/images/stewie-greeting.png";
+
+export default function LoginForm() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSignup(e: React.FormEvent<HTMLFormElement>) {
+  async function handleLogin(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     setLoading(true);
     setError("");
 
-    const { data, error } = await authClient.signUp.email({
+    const { data, error } = await authClient.signIn.email({
       email,
       password,
-      name: username,
-      username,
     });
 
     if (error) {
-      setError(error.message ?? "Something went wrong");;
+      setError(error.message ?? "Something went wrong");
       setLoading(false);
       return;
     }
@@ -50,7 +50,7 @@ export default function SignupForm() {
   }
 
   return (
-    <form onSubmit={handleSignup} className="relative flex flex-col gap-8">
+    <form onSubmit={handleLogin} className="relative flex flex-col gap-8">
       <button
         className="absolute right-0 cursor-pointer text-txtcolor hover:text-primary transition-colors duration-250"
         onClick={(e) => {
@@ -60,18 +60,15 @@ export default function SignupForm() {
       >
         <X strokeWidth={1} />
       </button>
-      <div className="flex flex-col justify-center items-center gap-4">
-        <h2 className="font-bold text-2xl">Welcome!</h2>
+      <div className="flex flex-col justify-center items-center gap-1">
+        <h2 className="font-bold text-2xl">Welcome back!</h2>
+        <Image
+          src={stewieGreetingImage}
+          alt="stewie greeting image"
+          className="w-full h-auto max-w-75"
+        />
       </div>
       <div className="flex flex-col gap-4 items-center">
-        <TextInput
-          type="text"
-          label="Username"
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
         <TextInput
           type="email"
           label="Email"
@@ -93,15 +90,15 @@ export default function SignupForm() {
           type="submit"
           disabled={loading}
         >
-          {loading ? "Creating account..." : "Signup"}
+          {loading ? "Logging in..." : "Login"}
         </button>
         <Button
           onClick={(e) => {
             e.preventDefault();
-            dispatch(setView("login"));
+            dispatch(setView("signup"));
           }}
         >
-          Already have an account?
+          Don&apos;t have an account?
         </Button>
       </div>
     </form>
