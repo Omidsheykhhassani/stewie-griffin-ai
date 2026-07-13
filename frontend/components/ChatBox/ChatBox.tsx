@@ -36,6 +36,7 @@ export default function ChatBox({
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => {
+          // Allows users to press Enter to send a message.
           if (e.key === "Enter") {
             e.preventDefault();
             handleSubmit();

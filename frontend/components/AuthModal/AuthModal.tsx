@@ -11,6 +11,7 @@ export default function AuthModal() {
   return (
     <AnimatePresence>
       <>
+        {/* This is the backdrop */}
         <motion.div
           className="fixed inset-0 bg-black/50 z-30"
           initial={{ opacity: 0 }}
@@ -18,7 +19,7 @@ export default function AuthModal() {
           exit={{ opacity: 0 }}
           onClick={() => router.back()}
         />
-
+        {/* This is the modal itself */}
         <motion.div
           className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-1rem)] max-w-lg bg-bgcolor p-6 rounded-xl z-50"
           initial={{ opacity: 0, scale: 0.9 }}

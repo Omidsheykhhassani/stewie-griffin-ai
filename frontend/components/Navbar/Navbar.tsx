@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { MoonStar, Sun } from "lucide-react";
 
@@ -15,17 +15,19 @@ import { authClient } from "@/lib/auth-client";
 export default function Navbar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const mode = useAppSelector((state) => state.theme.mode)
+  const mode = useAppSelector((state) => state.theme.mode);
 
   const { data: session, isPending } = authClient.useSession();
 
   return (
     <nav className="w-full max-w-7xl bg-bgcolor py-2 px-8 flex justify-between items-center">
       <div className="flex gap-4 items-center">
+        {/* Shows Loading */}
         {isPending ? (
           <span>Loading...</span>
         ) : session ? (
           <>
+            {/* Shows status and logout button if we're logged in. */}
             <span>Logged in as: {session.user.name}</span>
 
             <Button
@@ -38,6 +40,7 @@ export default function Navbar() {
           </>
         ) : (
           <>
+            {/* Shows signup and login button if we're not logged in. */}
             <Button
               onClick={() => {
                 dispatch(setView("signup"));
@@ -58,6 +61,7 @@ export default function Navbar() {
           </>
         )}
       </div>
+      {/* Dark/Light mode switch. */}
       <button
         className="p-4 border border-txtcolor inline-block rounded-full cursor-pointer"
         onClick={() => {

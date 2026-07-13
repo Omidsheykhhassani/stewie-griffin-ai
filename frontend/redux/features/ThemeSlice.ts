@@ -10,6 +10,7 @@ const initialState: ThemeState = {
   mode: "light",
 };
 
+// This creates the theme (Dark/Light mode) slice (context) for our app.
 const ThemeSlice = createSlice({
   name: "theme",
   initialState,

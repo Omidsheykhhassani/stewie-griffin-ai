@@ -9,9 +9,12 @@ import ChatBox from "@/components/ChatBox/ChatBox";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 
+import { authClient } from "@/lib/auth-client";
+
 export default function ChatSection() {
   const [input, setInput] = useState("");
 
+  // Getting every tool we need to send and load chats.
   const { messages, sendMessage, status, setMessages } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
@@ -27,8 +30,16 @@ export default function ChatSection() {
     }),
   });
 
+  const { data: session } = authClient.useSession();
+
+  // We load our history with this useEffect
   useEffect(() => {
     async function loadHistory() {
+      if (!session) {
+        setMessages([]);
+        return;
+      }
+
       const res = await fetch("/api/chat/history", {
         credentials: "include",
       });
@@ -41,7 +52,8 @@ export default function ChatSection() {
     }
 
     loadHistory();
-  }, [setMessages]);
+  }, [session, setMessages]);
+
   return (
     <>
       <ChatMessages messages={messages} />

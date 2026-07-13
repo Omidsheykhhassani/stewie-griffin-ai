@@ -15,6 +15,7 @@ type ChatMessagesProps = {
 export default function ChatMessages({ messages }: ChatMessagesProps) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  // The logic to scroll to the bottom of the chat when we open or refresh the page.
   useEffect(() => {
     bottomRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -23,6 +24,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
 
   return (
     <div className="flex flex-col gap-6 px-8 py-6 pb-40 overflow-y-auto">
+      {/* Renders every message */}
       {messages.map((message) => (
         <div
           key={message.id}
@@ -30,6 +32,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
         >
           <div className="max-w-3xl rounded-xl border border-txtcolor px-5 py-3">
             {message.parts.map((part, index) => {
+              // This is mostly to seperate the paragraphs from eachother
               if (part.type === "text") {
                 return (
                   <p key={index} className="whitespace-pre-wrap">
@@ -41,6 +44,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
               return null;
             })}
           </div>
+          {/* Shows the Stewie image beside it's message */}
           {message.role === "assistant" ? (
             <Image
               src={stewieImage}
@@ -52,6 +56,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
           )}
         </div>
       ))}
+      {/* We use this to scroll to the bottom of the chat when we open or refresh the page. */}
       <div ref={bottomRef} />
     </div>
   );

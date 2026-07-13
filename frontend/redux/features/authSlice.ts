@@ -10,6 +10,7 @@ const initialState: AuthState = {
   view: "login",
 };
 
+// This creates the authentication slice (context) for our app
 const authSlice = createSlice({
   name: "auth",
   initialState,
